@@ -23,25 +23,6 @@ const pangrams = [
 ];
 
 
-function isPangram(word, game) {
-    const remainingChars = new Set(game.outers.concat(game.center));
-    for (const char of word) {
-        remainingChars.delete(char);
-    }
-    return remainingChars.size === 0;
-}
-
-function score(word, game) {
-    if (word.length === 4) {
-        return 1;
-    }
-    if (isPangram(word)) {
-        return word.length + 7;
-    }
-    return word.length;
-}
-
-
 // find only words which consist of letters in the pangram
 export function findWordsForPangram(pangram) {
     const re = new RegExp('^[' + pangram + ']+$');
