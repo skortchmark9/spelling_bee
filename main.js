@@ -83,6 +83,7 @@ export class SpellingBee {
 
         this._setupEvents(container);
         this._setupTiles(initialGame);
+        this._setupProgress(initialGame);
         this._showScore(initialGame);
     }
     _setupEvents(container) {
@@ -126,6 +127,15 @@ export class SpellingBee {
             cells[i + 1].innerHTML = letter;
         });
     }
+    _setupProgress(game) {
+        const progress = this._container.querySelector('#progress-dots');
+        game.tiers.forEach(() => {
+            const div = document.createElement('div');
+            div.classList.add('progress-dot');
+            progress.appendChild(div);
+        });
+
+    }
     _showScore(game) {
         const count = this._container.querySelector('#words-count');
         const numWords = game.found.length;
@@ -139,7 +149,14 @@ export class SpellingBee {
             div.innerText = result;
             list.appendChild(div);
         });
-        // wip
+
+        const progressCurrent = this._container.querySelector('#progress-current');
+        progressCurrent.innerText = game.score;
+        const currentTier = game.currentTier;
+        const perTier = 100 / (game.tiers.length - 1);
+        progressCurrent.style.left = `${currentTier.idx * perTier}%`;
+
+        this._container.querySelector('#tier').innerText = currentTier.label;
     }
     async delete() {
         const input = this._container.querySelector('#text-input');

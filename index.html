@@ -7,24 +7,45 @@
                 font-size: large;
             }
 
+            * {
+                box-sizing: border-box;
+            }
+
             #bee {
-                display: flex;
+                display: grid;
+                grid-template-areas:
+                    "bee score"
+                    "bee words";
+                grid-template-columns: 300px auto;
+                grid-template-rows: 40px auto;
                 width: 100%;
-                gap: 40px;
-                padding: 0 40px;
+                column-gap: 40px;
+                padding: 10px 40px;
             }
 
             #bee-controls {
+                grid-area: bee;
                 padding: 20px 0;
                 width: 300px;
                 font-weight: bold;
             }
 
-            #bee-results {
-                flex-grow: 1;
+            #bee-words {
+                grid-area: words;
                 padding: 20px;
                 border-radius: 20px;
                 border: 1px solid #ccc;
+                margin-bottom: 20px;
+            }
+
+            #bee-score {
+                grid-area: score;
+                display: flex;
+                align-items: center;
+            }
+
+            #bee-score label {
+                font-weight: bold;
             }
 
             .hive {
@@ -92,7 +113,7 @@
                 transform: translate(-75%, 50%);
             }
 
-            section {
+            #bee-controls section {
                 display: flex;
                 justify-content: center;
             }
@@ -176,6 +197,47 @@
                 width: 200px;
             }
 
+            #progress {
+                position: relative;
+                flex-grow: 1;
+                margin-left: 40px;
+                margin-right: 20px;
+            }
+
+            #progress-dots {
+                display: flex;
+                justify-content: space-between;
+            }
+
+            #progress-line {
+                width: 98%;
+                height: 1px;
+                background: #ccc;
+                transform: translateY(4px)
+            }
+
+            .progress-dot {
+                height: 8px;
+                width: 8px;
+                transform: translateX(-50%);
+                border-radius: 50%;
+                background: #ccc;
+            }
+
+            #progress-current {
+                font-size: 12px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                position: absolute;
+                height: 32px;
+                width: 32px;
+                background-color: #f7da21;
+                font-family: monospace;
+                font-weight: bold;
+                bottom: -11px;
+            }
+
         </style>
         <script type="module">
             import { SpellingBee } from './main.js';
@@ -192,7 +254,7 @@
             <div id="bee-controls">
                 <section id="inputs">
                     <form>
-                        <input id="text-input" type="text" autofocus/>
+                        <input placeholder="Type or click" id="text-input" type="text" autofocus/>
                     </form>
                 </section>
                 <div class="hive">
@@ -240,12 +302,20 @@
                     <button id="enter">Enter</button>
                 </section>
             </div>
-            <div id="bee-results">
+            <section id="bee-score">
+                <label id="tier">Beginner</label>
+                <div id="progress">
+                    <div id="progress-line"></div>
+                    <div id="progress-dots"></div>
+                    <div id="progress-current" class="progress-dot">0</div>
+                </div>
+            </section>
+            <section id="bee-words">
                 <div id="words-count">
                 </div>
                 <div id="words-list">
                 </div>
-            </div>    
+            </section>
         </div>
     </body>
 </html>

@@ -12,6 +12,17 @@ export class Game {
         this.letters = outers.concat(center);
         this.answers = answers;
         this.found = [];
+
+        const tiers = [
+            { score: 0, label: 'Beginner' },
+            { score: 10, label: 'Good Start' },
+            { score: 20, label: 'Moving Up' },
+            { score: 40, label: 'Amazing' },
+            { score: 50, label: 'Genius' },
+        ];
+        tiers.forEach((tier, i) => tier.idx = i);
+
+        this.tiers = tiers;
     }
     validate(word) {
         if (this.found.includes(word)) {
@@ -59,5 +70,15 @@ export class Game {
             score += this.scoreNew(word);
         }
         return score;
+    }
+    get currentTier() {
+        const score = this.score;
+        let currentTier = this.tiers[0];
+        for (const tier of this.tiers) {
+            if (score >= tier.score) {
+                currentTier = tier;
+            }
+        }
+        return currentTier;
     }
 }
