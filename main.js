@@ -23,8 +23,13 @@ function shuffleArray(array) {
 
 const initialGame = {
     center: 'z',
-    outers:  [ 'd', 'e', 'i', 'n', 't', 'c']
+    outers:  [ 'd', 'e', 'i', 'n', 't', 'c'],
+    found: [],
 };
+
+function validateWord(word, game) {
+    return false;
+}
 
 export class SpellingBee {
     constructor(container) {
@@ -50,7 +55,13 @@ export class SpellingBee {
             cells.forEach((cell) => {
                 cell.classList.remove('push-active');
             });
-        })
+        });
+
+        const form = container.querySelector('form');
+        form.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+            this.submitWord();
+        });
     }
     _setupGame(game) {
         this._game = game;
@@ -60,6 +71,19 @@ export class SpellingBee {
         game.outers.forEach((letter, i) => {
             cells[i + 1].innerHTML = letter;
         });
+    }
+    async submitWord() {
+        const input = this._container.querySelector('#text-input');
+        const word = input.value;
+
+        if (validateWord(word, this._game)) {
+            // somethign
+        } else {
+            input.classList.add('invalid');
+            await timeout(700);
+            input.classList.remove('invalid');
+            input.value = '';
+        }
     }
     async shuffle() {
         const hive = this._container.querySelector('.hive');

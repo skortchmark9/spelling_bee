@@ -31,7 +31,7 @@ function isPangram(word, game) {
     return remainingChars.size === 0;
 }
 
-score(word, game) {
+function score(word, game) {
     if (word.length === 4) {
         return 1;
     }

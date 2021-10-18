@@ -98,6 +98,28 @@
                 transition: opacity .3s;
             }
 
+            @keyframes shake {
+                20% {
+                    transform: translate3d(-1px, 0, 0)
+                }
+
+                40% {
+                    transform: translate3d(2px, 0, 0)
+                }
+
+                60% {
+                    transform: translate3d(-1px, 0, 0)
+                }
+
+                80% {
+                    transform: translate3d(2px, 0, 0)
+                }
+            }
+
+            #text-input.invalid {
+                animation: shake 0.7s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+            }
+
         </style>
         <script type="module">
             import { SpellingBee } from './main.js';
@@ -112,7 +134,9 @@
     <body>
         <div id="bee">
             <section id="inputs">
-                <input id="text-input" type="text" autofocus/>
+                <form>
+                    <input id="text-input" type="text" autofocus/>
+                </form>
             </section>
             <div class="hive">
                 <svg class="hive-cell center" viewBox="0 0 120 103.92304845413263">
