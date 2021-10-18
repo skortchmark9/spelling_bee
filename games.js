@@ -16,7 +16,9 @@ const data = [
             "rich",
             "chip",
             "thirty",
-            "pitch" 
+            "pitch",
+            "chirp",
+            "pitchy",
         ],
     },
     {
