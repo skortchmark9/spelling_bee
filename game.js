@@ -14,11 +14,11 @@ export class Game {
         this.found = [];
 
         const tiers = [
-            { score: 0, label: 'Beginner' },
-            { score: 10, label: 'Good Start' },
-            { score: 20, label: 'Moving Up' },
-            { score: 40, label: 'Amazing' },
-            { score: 50, label: 'Genius' },
+            { score: 0, label: 'Zarf' },
+            { score: 10, label: 'Melvin' },
+            { score: 20, label: 'Bad Minton' },
+            { score: 40, label: 'Falso Fuego' },
+            { score: 50, label: 'El Capitan' },
         ];
         tiers.forEach((tier, i) => tier.idx = i);
 
