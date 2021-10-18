@@ -19,6 +19,11 @@ const data = [
             "pitch",
             "chirp",
             "pitchy",
+            "cryptic",
+            "itchy",
+            "itch",
+            "pithy",
+            "hitch",
         ],
     },
     {
