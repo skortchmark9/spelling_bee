@@ -5,11 +5,26 @@
                 display: flex;
                 justify-content: center;
                 font-size: large;
-                font-weight: bold;
             }
 
             #bee {
+                display: flex;
+                width: 100%;
+                gap: 40px;
+                padding: 0 40px;
+            }
+
+            #bee-controls {
+                padding: 20px 0;
                 width: 300px;
+                font-weight: bold;
+            }
+
+            #bee-results {
+                flex-grow: 1;
+                padding: 20px;
+                border-radius: 20px;
+                border: 1px solid #ccc;
             }
 
             .hive {
@@ -82,10 +97,6 @@
                 justify-content: center;
             }
 
-            input {
-                text-align: center;
-            }
-
             .hive {
                 margin: 40px 0;
             }
@@ -116,6 +127,16 @@
                 80% {
                     transform: translate3d(2px, 0, 0)
                 }
+            }
+
+
+
+            #text-input {
+                text-align: center;
+            }
+
+            form {
+                margin: 0;
             }
 
             #text-input.invalid {
@@ -150,6 +171,11 @@
                 width: 50px;
             }
 
+            .found-word {
+                border-bottom: 1px solid #ccc;
+                width: 200px;
+            }
+
         </style>
         <script type="module">
             import { SpellingBee } from './main.js';
@@ -163,55 +189,63 @@
     </head>
     <body>
         <div id="bee">
-            <section id="inputs">
-                <form>
-                    <input id="text-input" type="text" autofocus/>
-                </form>
-            </section>
-            <div class="hive">
-                <svg class="hive-cell center" viewBox="0 0 120 103.92304845413263">
-                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
-                    </polygon>
-                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
-                </svg>
-                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
-                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
-                    </polygon>
-                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
-                </svg>
-                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
-                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
-                    </polygon>
-                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
-                </svg>
-                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
-                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
-                    </polygon>
-                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
-                </svg>
-                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
-                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
-                    </polygon>
-                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
-                </svg>
-                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
-                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
-                    </polygon>
-                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
-                </svg>
-                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
-                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
-                    </polygon>
-                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
-                </svg>
+            <div id="bee-controls">
+                <section id="inputs">
+                    <form>
+                        <input id="text-input" type="text" autofocus/>
+                    </form>
+                </section>
+                <div class="hive">
+                    <svg class="hive-cell center" viewBox="0 0 120 103.92304845413263">
+                        <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                        </polygon>
+                        <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                    </svg>
+                    <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                        <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                        </polygon>
+                        <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                    </svg>
+                    <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                        <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                        </polygon>
+                        <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                    </svg>
+                    <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                        <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                        </polygon>
+                        <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                    </svg>
+                    <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                        <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                        </polygon>
+                        <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                    </svg>
+                    <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                        <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                        </polygon>
+                        <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                    </svg>
+                    <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                        <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                        </polygon>
+                        <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                    </svg>
+                </div>
+                <section id="controls">
+                    <button id="delete">Delete</button>
+                    <button id="shuffle">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 527 527" ><path fill-rule="evenodd" d="M140.5 50l18 31.3a210 210 0 0 1 286.6 287.5l-26-15a180 180 0 0 0-245.5-246.6h-.1l23.2 40.2-73-22.7L140.5 50zM81.7 368.3a210 210 0 0 1 .2-210.5l26 15A180 180 0 0 0 353.6 419l-22.3-38.5 73 22.7-16.8 74.6-19-32.8a210 210 0 0 1-286.8-76.9z" clip-rule="evenodd"/></svg>
+                    </button>
+                    <button id="enter">Enter</button>
+                </section>
             </div>
-            <section id="controls">
-                <button id="delete">Delete</button>
-                <button id="shuffle">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 527 527" ><path fill-rule="evenodd" d="M140.5 50l18 31.3a210 210 0 0 1 286.6 287.5l-26-15a180 180 0 0 0-245.5-246.6h-.1l23.2 40.2-73-22.7L140.5 50zM81.7 368.3a210 210 0 0 1 .2-210.5l26 15A180 180 0 0 0 353.6 419l-22.3-38.5 73 22.7-16.8 74.6-19-32.8a210 210 0 0 1-286.8-76.9z" clip-rule="evenodd"/></svg>
-                </button>
-                <button id="enter">Enter</button>
-            </section>
+            <div id="bee-results">
+                <div id="words-count">
+                </div>
+                <div id="words-list">
+                </div>
+            </div>    
         </div>
     </body>
 </html>

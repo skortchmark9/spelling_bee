@@ -127,6 +127,18 @@ export class SpellingBee {
         });
     }
     _showScore(game) {
+        const count = this._container.querySelector('#words-count');
+        const numWords = game.found.length;
+        count.innerText = `You have found ${numWords} ${numWords === 1 ? 'word' : 'words'}`;
+
+        const list = this._container.querySelector('#words-list');
+        list.innerHTML = '';
+        game.found.forEach((result) => {
+            const div = document.createElement('div');
+            div.classList.add('found-word');
+            div.innerText = result;
+            list.appendChild(div);
+        });
         // wip
     }
     async delete() {
@@ -143,6 +155,8 @@ export class SpellingBee {
             const points = this._game.scoreNew(word);
             this._game.add(word);
             console.log(`gained ${points} points. Now at ${this._game.score}.`);
+            this._showScore(this._game);
+            input.value = '';
         } else {
             input.classList.add('invalid');
             await timeout(700);
