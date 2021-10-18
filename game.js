@@ -7,6 +7,7 @@ function shuffleArray(array) {
 
 export class Game {
     constructor(center, outers, answers) {
+        shuffleArray(outers);
         this.center = center;
         this.outers = outers;
         this.letters = outers.concat(center);
@@ -20,7 +21,12 @@ export class Game {
             { score: 40, label: 'Falso Fuego' },
             { score: 50, label: 'El Capitan' },
         ];
-        tiers.forEach((tier, i) => tier.idx = i);
+
+        for (let i = 0; i < tiers.length; i++) {
+            const tier = tiers[i];
+            tier.idx = i;
+            tier.score = Math.round(this.maxScore * (i / tiers.length));
+        }
 
         this.tiers = tiers;
     }
@@ -41,7 +47,7 @@ export class Game {
         return this.answers.includes(word);
         return true;
     }
-    _isPangram(word) {
+    isPangram(word) {
         const remainingChars = new Set(this.letters);
         for (const char of word) {
             remainingChars.delete(char);
@@ -55,7 +61,7 @@ export class Game {
         if (word.length === 4) {
             return 1;
         }
-        if (this._isPangram(word)) {
+        if (this.isPangram(word)) {
             return word.length + 7;
         }
         return word.length;    
@@ -67,6 +73,13 @@ export class Game {
     get score() {
         let score = 0;
         for (const word of this.found) {
+            score += this.scoreNew(word);
+        }
+        return score;
+    }
+    get maxScore() {
+        let score = 0;
+        for (const word of this.answers) {
             score += this.scoreNew(word);
         }
         return score;

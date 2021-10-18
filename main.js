@@ -1,18 +1,6 @@
 import { Game } from './game.js';
+import { games } from './games.js';
 
-const words = [
-    'triptych',
-    'gouache',
-    'saltine',
-    'fritopie',
-    'licorace',
-    'flippers',
-    'dartboard',
-    'schlomp',
-    'crosstrek',
-    'mineral',
-    'boulder',
-];
 
 const timeout = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
@@ -22,77 +10,83 @@ const bindEvents = (node, evts, callback) => {
     }
 }
 
-const initialGame = new Game('u', [ 'd', 'e', 'i', 'n', 't', 'c'], [
-    "inducted",
-    "inductee",
-    "cued",
-    "cute",
-    "cutie",
-    "deduce",
-    "deduced",
-    "deduct",
-    "deducted",
-    "denude",
-    "denuded",
-    "deuce",
-    "duct",
-    "ducted",
-    "dude",
-    "duded",
-    "duet",
-    "duetted",
-    "dunce",
-    "dune",
-    "dunned",
-    "educe",
-    "educed",
-    "endue",
-    "endued",
-    "ennui",
-    "etude",
-    "induce",
-    "induced",
-    "induct",
-    "intuit",
-    "intuited",
-    "nude",
-    "nudie",
-    "tune",
-    "tuned",
-    "tunic",
-    "tutee",
-    "tutted",
-    "tutti",
-    "tutu",
-    "uncut",
-    "undecided",
-    "undetected",
-    "undid",
-    "undue",
-    "unedited",
-    "unintended",
-    "unit",
-    "unite",
-    "united",
-    "unneeded",
-    "untie",
-    "untied",
-    "untune",
-    "untuned"
-]
-);
+// const initialGame = new Game('u', [ 'd', 'e', 'i', 'n', 't', 'c'], [
+//     "inducted",
+//     "inductee",
+//     "cued",
+//     "cute",
+//     "cutie",
+//     "deduce",
+//     "deduced",
+//     "deduct",
+//     "deducted",
+//     "denude",
+//     "denuded",
+//     "deuce",
+//     "duct",
+//     "ducted",
+//     "dude",
+//     "duded",
+//     "duet",
+//     "duetted",
+//     "dunce",
+//     "dune",
+//     "dunned",
+//     "educe",
+//     "educed",
+//     "endue",
+//     "endued",
+//     "ennui",
+//     "etude",
+//     "induce",
+//     "induced",
+//     "induct",
+//     "intuit",
+//     "intuited",
+//     "nude",
+//     "nudie",
+//     "tune",
+//     "tuned",
+//     "tunic",
+//     "tutee",
+//     "tutted",
+//     "tutti",
+//     "tutu",
+//     "uncut",
+//     "undecided",
+//     "undetected",
+//     "undid",
+//     "undue",
+//     "unedited",
+//     "unintended",
+//     "unit",
+//     "unite",
+//     "united",
+//     "unneeded",
+//     "untie",
+//     "untied",
+//     "untune",
+//     "untuned"
+// ]
+// );
 
-initialGame.found = ['inducted', 'inductee', 'cued', 'cute', 'cutie', 'deduce', 'deduced', 'deducted', 'denude', 'denuded']
+// initialGame.found = ['inducted', 'inductee', 'cued', 'cute', 'cutie', 'deduce', 'deduced', 'deducted', 'denude', 'denuded']
+const initialGame = games[8];
 
 export class SpellingBee {
-    constructor(container) {
+    constructor(container, game) {
         this._container = container;
-        this._game = null;
+        this._game = game;
 
         this._setupEvents(container);
-        this._setupTiles(initialGame);
-        this._setupProgress(initialGame);
-        this._showScore(initialGame);
+
+        this.newGame(game);
+    }
+    newGame(game) {
+        this._game = game;
+        this._setupTiles(this._game);
+        this._setupProgress(game);
+        this._showScore(game);
     }
     _setupEvents(container) {
         const cells = [...container.querySelectorAll('.hive-cell')];
@@ -148,6 +142,7 @@ export class SpellingBee {
     }
     _setupProgress(game) {
         const progress = this._container.querySelector('#progress-dots');
+        progress.innerHTML = '';
         game.tiers.forEach(() => {
             const div = document.createElement('div');
             div.classList.add('progress-dot');
@@ -161,6 +156,8 @@ export class SpellingBee {
         count.innerText = `You have found ${numWords} ${numWords === 1 ? 'word' : 'words'}`;
         if (numWords) {
             count.classList.add('found-some');
+        } else {
+            count.classList.remove('found-some');
         }
 
         const list = this._container.querySelector('#words-list');
@@ -168,6 +165,9 @@ export class SpellingBee {
         game.found.forEach((result) => {
             const div = document.createElement('div');
             div.classList.add('found-word');
+            if (game.isPangram(result)) {
+                div.classList.add('pangram');
+            }
             div.innerText = result;
             list.appendChild(div);
         });
@@ -177,8 +177,11 @@ export class SpellingBee {
         const currentTier = game.currentTier;
         const perTier = 100 / (game.tiers.length - 1);
         progressCurrent.style.left = `${currentTier.idx * perTier}%`;
-
         this._container.querySelector('#tier').innerText = currentTier.label;
+
+        if (game.score === game.maxScore) {
+            this._container.querySelector('#tier').innerText = 'Holy Mother!!';
+        }
     }
     async delete() {
         const input = this._container.querySelector('#text-input');

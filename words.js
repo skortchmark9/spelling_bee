@@ -1,26 +1,9 @@
-// const dictionary = await fetch('1k_common.json');
-// const json = await dictionary.json()
-// const allWords = json.commonWords;
-
 const dictionary = await fetch('10k_common.txt');
 const text = await dictionary.text();
 const allWords = text.split('\n');
 
 const min4Words = allWords.filter((word) => word.length >= 4);
 
-const pangrams = [
-    'triptych',
-    'gouache',
-    'saltine',
-    'fritopie',
-    'licorace',
-    'flippers',
-    'dartboard',
-    'schlomp',
-    'crosstrek',
-    'mineral',
-    'boulder',
-];
 
 
 // find only words which consist of letters in the pangram

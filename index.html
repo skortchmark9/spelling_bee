@@ -2,8 +2,6 @@
     <head>
         <style>
             body {
-                display: flex;
-                justify-content: center;
                 font-size: large;
             }
 
@@ -267,6 +265,10 @@
                 border-bottom: 1px solid #ccc;
             }
 
+            .pangram {
+                background: #f7da21;
+            }
+
             #progress {
                 position: relative;
                 flex-grow: 1;
@@ -308,15 +310,37 @@
                 bottom: -11px;
             }
 
+            .game-select {
+                padding: 1em;
+                border: 1px solid #ccc;
+                border-radius: 1em;
+                text-align: center;
+                margin: 1em;
+            }
+
         </style>
         <script type="module">
             import { SpellingBee } from './main.js';
+            import { games } from './games.js';
 
             document.addEventListener('DOMContentLoaded', () => {
                 const container = document.querySelector('#bee');
-                window.bee = new SpellingBee(container);
-            });
+                const bee = new SpellingBee(container, games[0]);
+                window.bee = bee;
 
+                const gamesList = document.querySelector('#games-list');
+                for (let i = 0; i < games.length; i++) {
+                    const div = document.createElement('div');
+                    div.classList.add('game-select');
+                    div.innerText = `Play Game ${i + 1}`;
+                    gamesList.appendChild(div);
+
+                    div.addEventListener('click', () => {
+                        bee.newGame(games[i]);
+                    });
+                }
+
+            });
         </script>
     </head>
     <body>
@@ -386,6 +410,9 @@
                 <div id="words-list">
                 </div>
             </section>
+        </div>
+        <div id="games-list">
+            
         </div>
     </body>
 </html>
