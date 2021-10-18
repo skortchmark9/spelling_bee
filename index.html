@@ -93,9 +93,14 @@
                 padding: 20px;
                 border-radius: 20px;
                 border: 1px solid #ccc;
-                margin-bottom: 20px;
+                margin-bottom: 0.5em;
                 min-width: 0;
+                min-height: 0;
                 overflow: auto;
+            }
+
+            #words-list {
+                max-height: 100px;
             }
 
             #bee-score {
@@ -330,13 +335,24 @@
 
                 const gamesList = document.querySelector('#games-list');
                 for (let i = 0; i < games.length; i++) {
+                    const  game = games[i];
                     const div = document.createElement('div');
                     div.classList.add('game-select');
-                    div.innerText = `Play Game ${i + 1}`;
+
+
+                    let length = 'short';
+                    if (game.answers.length > 15) {
+                        length = 'medium';
+                    }
+                    if (game.answers.length > 30) {
+                        length = 'long';
+                    }
+
+                    div.innerText = `Play Game ${i + 1}: "${game.center}" (${length})`;
                     gamesList.appendChild(div);
 
                     div.addEventListener('click', () => {
-                        bee.newGame(games[i]);
+                        bee.newGame(game);
                     });
                 }
 
