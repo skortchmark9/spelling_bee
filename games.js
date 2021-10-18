@@ -19,6 +19,7 @@ const data = [
             "pitch",
             "chirp",
             "pitchy",
+            "crypt",
             "cryptic",
             "itchy",
             "itch",
