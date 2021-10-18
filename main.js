@@ -16,6 +16,12 @@ const words = [
 
 const timeout = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
+const bindEvents = (node, evts, callback) => {
+    for (const eventType of evts) {
+        node.addEventListener(eventType, callback);
+    }
+}
+
 const initialGame = new Game('u', [ 'd', 'e', 'i', 'n', 't', 'c'], [
     "inducted",
     "inductee",
@@ -76,6 +82,8 @@ const initialGame = new Game('u', [ 'd', 'e', 'i', 'n', 't', 'c'], [
 ]
 );
 
+initialGame.found = ['inducted', 'inductee', 'cued', 'cute', 'cutie', 'deduce', 'deduced', 'deducted', 'denude', 'denuded']
+
 export class SpellingBee {
     constructor(container) {
         this._container = container;
@@ -91,17 +99,19 @@ export class SpellingBee {
         const input = container.querySelector('#text-input');
 
         cells.forEach((cell) => {
-            cell.addEventListener('mousedown', () => {
+            bindEvents(cell, ['mousedown', 'touchstart'], (evt) => {
                 cell.classList.add('push-active');
                 input.value = input.value += cell.textContent.trim();
+                evt.preventDefault();
             });
-        })
 
-        window.addEventListener('mouseup', (evt) => {
+        });
+
+        bindEvents(window, ['mouseup', 'touchend'], (evt) => {
             cells.forEach((cell) => {
                 cell.classList.remove('push-active');
             });
-        });
+        })
 
         const form = container.querySelector('form');
         form.addEventListener('submit', (evt) => {
@@ -110,13 +120,22 @@ export class SpellingBee {
         });
 
         const shuffle = container.querySelector('#shuffle');
-        shuffle.addEventListener('click', () => this.shuffle());
+        bindEvents(shuffle, ['click', 'touchstart'], (evt) => {
+            evt.preventDefault();
+            this.shuffle();
+        })
 
         const _delete = container.querySelector('#delete');
-        _delete.addEventListener('click', () => this.delete());
+        bindEvents(_delete, ['click', 'touchstart'], (evt) => {
+            evt.preventDefault();
+            this.delete();
+        })
 
         const enter = container.querySelector('#enter');
-        enter.addEventListener('click', () => this.submitWord());
+        bindEvents(enter, ['click', 'touchstart'], (evt) => {
+            evt.preventDefault();
+            this.submitWord();
+        })
     }
     _setupTiles(game) {
         this._game = game;
@@ -140,6 +159,9 @@ export class SpellingBee {
         const count = this._container.querySelector('#words-count');
         const numWords = game.found.length;
         count.innerText = `You have found ${numWords} ${numWords === 1 ? 'word' : 'words'}`;
+        if (numWords) {
+            count.classList.add('found-some');
+        }
 
         const list = this._container.querySelector('#words-list');
         list.innerHTML = '';
