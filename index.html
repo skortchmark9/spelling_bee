@@ -1,0 +1,159 @@
+<html>
+    <head>
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+            }
+
+            #bee {
+                width: 300px;
+            }
+
+            .hive {
+                position: relative;
+                height: 300px;
+            }
+
+            .hive .cell-letter {
+                font-weight: 700;
+                font-size: 1.875em;
+                text-anchor: middle;
+                text-transform: uppercase;
+                pointer-events: none;
+            }
+
+            .center .cell-fill {
+                fill: #f7da21;
+            }
+
+            .hive-cell {
+                position: absolute;
+                top: calc(100% / 3);
+                left: 30%;
+                width: 40%;
+                height: calc(100% / 3);
+            }
+
+            .cell-fill {
+                fill: #bebeff;
+                cursor: pointer;
+                transition: all 100ms;
+            }
+            
+            .push-active .cell-fill {
+                transform: scale(0.86);
+                fill: #9b8fd4;
+                transform-origin: center center;
+            }
+
+            hive-cell:nth-child(1) {
+                transform: translate(0, 0);
+            }
+
+            .hive-cell:nth-child(2) {
+                transform: translate(-75%, -50%);
+            }
+
+            .hive-cell:nth-child(3) {
+                transform: translate(0, -100%);
+            }
+
+            .hive-cell:nth-child(4) {
+                transform: translate(75%, -50%);
+            }
+
+            .hive-cell:nth-child(5) {
+                transform: translate(75%, 50%);
+            }
+
+            .hive-cell:nth-child(6) {
+                transform: translate(0, 100%);
+            }
+
+            .hive-cell:nth-child(7) {
+                transform: translate(-75%, 50%);
+            }
+
+            section {
+                display: flex;
+                justify-content: center;
+            }
+
+            input {
+                text-align: center;
+            }
+
+            .hive {
+                margin: 40px 0;
+            }
+
+            .hive.fade-out .outer .cell-letter {
+                opacity: 0;
+                transition: opacity .3s;
+            }
+
+            .hive.fade-in .outer .cell-letter {
+                opacity: 1;
+                transition: opacity .3s;
+            }
+
+        </style>
+        <script type="module">
+            import { SpellingBee } from './main.js';
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const container = document.querySelector('#bee');
+                window.bee = new SpellingBee(container);
+            });
+
+        </script>
+    </head>
+    <body>
+        <div id="bee">
+            <section id="inputs">
+                <input id="text-input" type="text" autofocus/>
+            </section>
+            <div class="hive">
+                <svg class="hive-cell center" viewBox="0 0 120 103.92304845413263">
+                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                    </polygon>
+                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                </svg>
+                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                    </polygon>
+                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                </svg>
+                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                    </polygon>
+                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                </svg>
+                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                    </polygon>
+                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                </svg>
+                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                    </polygon>
+                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                </svg>
+                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                    </polygon>
+                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                </svg>
+                <svg class="hive-cell outer" viewBox="0 0 120 103.92304845413263">
+                    <polygon class="cell-fill" points="0,51.96152422706631 30,0 90,0 120,51.96152422706631 90,103.92304845413263 30,103.92304845413263" stroke="white" stroke-width="7.5">
+                    </polygon>
+                    <text class="cell-letter" x="50%" y="50%" dy="0.35em"></text>
+                </svg>
+            </div>
+            <section>
+
+            </section>
+        </div>
+    </body>
+</html>
