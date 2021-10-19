@@ -1,15 +1,22 @@
-const dictionary = await fetch('10k_common.txt');
-const text = await dictionary.text();
-const allWords = text.split('\n');
+// const dictionary = await fetch('10k_common.txt');
+// const text = await dictionary.text();
+// const allWords = text.split('\n');
+
+const dictionary = await fetch('scrabble.json');
+const text = await dictionary.json();
+const allWords = text;
 
 const min4Words = allWords.filter((word) => word.length >= 4);
 
 
 
 // find only words which consist of letters in the pangram
-export function findWordsForPangram(pangram) {
+export function findWordsForPangram(pangram, center) {
     const re = new RegExp('^[' + pangram + ']+$');
-    const matches = min4Words.filter((word) => re.test(word));
+    let matches = min4Words.filter((word) => re.test(word));
+    if (center) {
+        matches = matches.filter((word) => word.includes(center));
+    }
 
     const minimums = matches.filter((word) => word.length > 3);
     return minimums;
