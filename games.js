@@ -11,7 +11,6 @@ const data = [
         word: 'triptych',
         center: 'i',
         answers: [
-            [
                 "chic",
                 "chip",
                 "chippy",
@@ -42,7 +41,6 @@ const data = [
                 "trip",
                 "trippy",
                 "triptych",
-            ]
         ],
     },
     {
